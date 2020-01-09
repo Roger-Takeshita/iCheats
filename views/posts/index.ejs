@@ -1,0 +1,33 @@
+<%- include('../partials/header') %>
+   <div class="container">
+      <div id="search-row" class="row">
+         <h2 class="col s4 blue-grey-text text-darken-2"><%= title %></h2>
+      </div>
+      <div class="row">
+         <div id="users" class="col s12">
+         <% users.forEach(function(user) { %>
+            <div class="card blue-grey">
+               <div class="card-content white-text">
+               <div>
+                  <span class="card-title">
+                     <img src="<%= user.avatar%>" alt="" class="avatar-post">
+                     <span class="user-name"><%= user.givenName %> <%= user.familyName %></span>
+                  </span>
+               </div>
+               <ul class="collection">
+               </ul>
+               <% if (user._id.equals(user && user._id)) { %>
+                  <div class="card-action">
+                     <form action="/users" method="POST">
+                     <input type="text" name="text" class="white-text">
+                     <button type="submit" class="btn white-text">Post</button>
+                     </form>
+                  </div>
+               <% } %>
+               </div>
+            </div>
+         <% }) %>
+         </div>
+      </div>
+   </div>
+<%- include('../partials/footer') %>

@@ -1,0 +1,16 @@
+<%- include('./partials/header') %>
+  <div class="container body">
+    <div id="posts"></div>
+    <% if (user) { %>
+      <div id="posts-side">
+        <div id="chat-msg">
+          fasdfasdfadsfasdfasd
+        </div>
+        <div id="chat-input-button">
+          <input id="chat-input" type="text">
+          <button id="chat-button">Send</button>
+        </div>
+      </div>
+    <% } %>
+  </div>
+<%- include('./partials/footer') %>

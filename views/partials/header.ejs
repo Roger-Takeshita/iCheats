@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title><%= title %></title>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Dancing+Script&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap" rel="stylesheet">   
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+      <link rel="stylesheet" href="/stylesheets/style.css" />
+   </head>
+      <ul id="dropdown1" class="dropdown-content">
+        <li><a href="/">Profile</a></li>
+        <li class="divider"></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+      <nav>
+        <div class="nav-wrapper">
+            <a href="/"><img src="/images/file_sharing_logo_01.png" alt="Logo" class="brand-logo"></a>
+            <ul class="right hide-on-med-and-down">
+               <% if (user) { %>
+                  <li><a class="modal-trigger" href="#modal1">+</a></li>
+                  <li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><img src="<%= user.avatar %>" alt="" class="dropbtn avatar-logout"><i class="material-icons right">arrow_drop_down</i></a></li>
+               <% } else { %>
+                  <li><a href="/auth/google">Login In</a></ul></li>
+               <% } %>
+        </div>
+      </nav>
+      <% if (user) { %>
+         <div id="modal1" class="modal">
+            <div class="modal-content">
+               <h6>New Post</h6>
+               <form action="/" method="POST">
+                  <input type="text" name="text" class="new-post" wrap="hard" style="border: 1px solid lightgrey;">
+                  <button type="submit" class="btn white-text">Post</button>
+               </form>
+            </div>
+         </div>
+      <% } %>

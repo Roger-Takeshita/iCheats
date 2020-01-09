@@ -1,0 +1,186 @@
+.container {
+  padding-top: 100px;
+  display: flex;
+}
+
+nav {
+  position: fixed;
+  background-color: lightgrey;
+}
+
+#logo {
+  height: 20px;
+  width: 20px;
+}
+
+.avatar {
+  height: 50px;
+  width: 50px;
+}
+
+.avatar-post {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+}
+
+.avatar-logout {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+.post {
+  width: 550px;
+  word-break: break-all;
+}
+
+#posts-side {
+  height: 80vh;
+  width: 390px;
+  margin-left: 560px;
+  position: fixed;
+  background-color: lightskyblue;
+  display: flex;
+  flex-direction: column;
+}
+
+#chat-msg {
+  flex-grow: 1;
+}
+
+#chat-input-button {
+  background-color: red;
+  height: 60px;
+  margin-bottom: 10px;
+  align-content: flex-end;
+  align-self: center;
+
+}
+
+form > input.new-post {
+  min-height: 150px;
+  border: 1px solid lightgrey;
+  overflow-wrap: break-word;
+  text-align: center;
+  justify-content: center;
+}
+
+.user-info {
+  padding-top: 1em;
+  padding-bottom: 5px;
+  display: flex;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.user-info > a {
+  color: darkgray;
+  margin: auto 0 auto auto;
+}
+
+.dots {
+  justify-content: flex-end;
+}
+
+.user-post {
+  min-height: 100px;
+  min-width: 250px;
+  text-align: center;
+  justify-content: center;
+  border: 1px solid lightgrey;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.user-comment {
+  min-height: 70px;
+  color: darkgrey;
+  border-bottom: 1px solid lightgrey;
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+}
+
+.edit, .delete {
+  font-size: 10px;
+}
+
+.edit {
+  color: lightgreen;
+}
+
+.delete {
+  color: lightpink;
+}
+
+.user-comment > p {
+  margin-block-start: 0;
+  margin-inline-end: 0;
+}
+
+
+#comments {
+  color: black;
+  font-weight: bolder;
+  background-color: #eeeeee;
+}
+
+.comment-field {
+  display: flex;
+}
+
+#input-new-comment {
+  font: 15px;
+  height: 30px;
+  border-bottom: 1px solid lightgrey;
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+  border-bottom-left-radius: 5px;
+}
+
+#button-new-comment {
+  font-size: 13px;
+  width: 100px;
+  height: 31px;
+  border-bottom-right-radius: 5px;
+}
+
+.full-name-comment {
+  color: black;
+}
+#chat-input {
+  width: 250px;
+}
+
+#chat-button {
+
+}
+
+footer {
+  position: sticky;
+  background-color:#eeeeee;
+  margin: 0 auto;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  height: 50px;
+  line-height: 50px;
+  font-family: 'Fredoka One', cursive;
+}
+
+footer a {
+  text-decoration: none;
+  color: black;
+}
+
+footer span {
+  font-family: 'Dancing Script', cursive;
+  font-size: 15px;
+}
+
+footer img {
+  height: 20px;
+  width: 20px;
+}
