@@ -46,7 +46,7 @@ $.ajax({
                   <p>${post.post}</p>
                </div>
                <div class="user-comment">
-                  <p id="comments">Comments:</p>`;
+                  <p id="comments">&nbsp;&nbsp;Comments:</p>`;
                   post.comments.forEach(function(comment) {
                      if (data.currentUser && (data.currentUser._id === comment.user._id || data.currentUser.adm)) {
                         listPostsHTML += `

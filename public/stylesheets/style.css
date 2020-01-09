@@ -36,26 +36,50 @@ nav {
 }
 
 #posts-side {
-  height: 80vh;
+  top: 145px;
+  bottom: 72px;
   width: 390px;
   margin-left: 560px;
   position: fixed;
-  background-color: lightskyblue;
   display: flex;
   flex-direction: column;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
 }
 
 #chat-msg {
+  background-color: #f9f7f7;
   flex-grow: 1;
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
+  border-bottom: 1px solid lightgrey;
+}
+
+#msg > li {
+  padding: 10px;
+  word-break: break-all;
 }
 
 #chat-input-button {
-  background-color: red;
   height: 60px;
+  margin-top: 10px;
   margin-bottom: 10px;
   align-content: flex-end;
   align-self: center;
+}
 
+#chat-input {
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  font-size: 15px;
+  padding-left: 10px;
+}
+
+#chat-button {
+  height: 49px;
+  width: 100px;
+  border-radius: 5px;
 }
 
 form > input.new-post {
@@ -86,6 +110,7 @@ form > input.new-post {
 .user-post {
   min-height: 100px;
   min-width: 250px;
+  padding: 10px;
   text-align: center;
   justify-content: center;
   border: 1px solid lightgrey;
