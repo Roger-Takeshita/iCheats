@@ -2,11 +2,10 @@
   <div class="container body">
     <div id="posts"></div>
     <% if (user) { %>
+      <p id="userName" hidden><%= user.givenName %> <%= user.familyName %></p>
       <div id="posts-side">
         <div id="chat-msg">
-          <ul id="msg">
-            <li>hehehehehaihaihaiahiahihahiahiahiahihaiahihiahiahiahiahaihaiahaihihaiahe</li>
-          </ul>
+          <ul id="msg"></ul>
         </div>
         <div id="chat-input-button">
           <input id="chat-input" type="text">

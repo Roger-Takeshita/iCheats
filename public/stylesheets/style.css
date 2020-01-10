@@ -49,11 +49,13 @@ nav {
 
 #chat-msg {
   background-color: #f9f7f7;
-  flex-grow: 1;
   display: flex;
+  height: auto;
+  flex-grow: 1;
   justify-content: end;
   align-items: flex-end;
   border-bottom: 1px solid lightgrey;
+  overflow-y: scroll;
 }
 
 #msg > li {

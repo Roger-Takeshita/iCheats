@@ -1,8 +1,9 @@
 const socket = io();
-const inputBoxEl = document.querySelector('input');
-const sendButtonEl = document.getElementsByTagName('button');
-const usersEl = document.getElementById('users');
-let userName = '';
+const inputBoxEl = document.getElementById('chat-input');
+const sendButtonEl = document.getElementById('chat-button');
+// const usersEl = document.getElementById('users');
+const msgFieldEl = document.getElementById('msg');
+const userNameEl = document.getElementById('userName');
 
 //! Print new msg
    socket.on('new-msg', function(data) {
@@ -10,45 +11,44 @@ let userName = '';
    });
 
    function printMsg (msg) {
-      console.log(`${msg.userName} [${msg.time}] - ${msg.msg}`);     
+      let newMsg = `[${msg.userName}] ${msg.msg}`;
+      console.log(`${msg.userName} [${msg.time}] - ${msg.msg}`);
+      const liElement = document.createElement("li")
+      liElement.innerText = newMsg;
+      msgFieldEl.appendChild(liElement);
+      msgFieldEl.scrollTop = msgFieldEl.scrollHeight;
    };
 
 //! Update users list
-   socket.on('update-user-list', function(data) {
-      let userList = '<li>' + data.join('</li><li>') + '</li>';
-      usersEl.innerHTML = userList;
-   });
+   // socket.on('update-user-list', function(data) {
+   //    let userList = '<li>' + data.join('</li><li>') + '</li>';
+   //    usersEl.innerHTML = userList;
+   // });
 
 //! Get user name
-   function getName() {
-      const input = prompt('Please enter your name');
-      return input ? input.toUpperCase() : '';
-   };
-
-   do {
-      userName = getName();
-   } while (userName.length < 2 || userName.length > 10);
-
-   socket.emit('new-user', userName);
-
+   if (userNameEl !== null) {
+      socket.emit('new-user', userNameEl.innerHTML);
+   }
 //! Send button
-   inputBoxEl.addEventListener("keyup", function(event) {
-      if (event.keyCode === 13) {
+   if (userNameEl !== null) {
+      inputBoxEl.addEventListener("keyup", function(event) {
+         if (event.keyCode === 13) {
+            socket.emit('new-msg', {
+               userName: userNameEl.innerHTML,
+               msg: inputBoxEl.value,
+               time: new Date()
+            });
+            inputBoxEl.value = '';
+            inputBoxEl.focus(); 
+         }
+      });
+      sendButtonEl.addEventListener('click', function() {
          socket.emit('new-msg', {
-            userName,
+            userName: userNameEl.innerHTML,
             msg: inputBoxEl.value,
             time: new Date()
          });
          inputBoxEl.value = '';
          inputBoxEl.focus(); 
-      }
-   });
-   sendButtonEl[0].addEventListener('click', function() {
-      socket.emit('new-msg', {
-         userName,
-         msg: inputBoxEl.value,
-         time: new Date()
       });
-      inputBoxEl.value = '';
-      inputBoxEl.focus(); 
-   });
+   }
