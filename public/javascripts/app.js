@@ -12,11 +12,9 @@ const userNameEl = document.getElementById('userName');
 
    function printMsg (msg) {
       let newMsg = `[${msg.userName}] ${msg.msg}`;
-      console.log(`${msg.userName} [${msg.time}] - ${msg.msg}`);
       const liElement = document.createElement("li")
       liElement.innerText = newMsg;
       msgFieldEl.appendChild(liElement);
-      msgFieldEl.scrollTop = msgFieldEl.scrollHeight;
    };
 
 //! Update users list

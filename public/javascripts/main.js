@@ -4,7 +4,7 @@ if ($('.dropdown-trigger').length) {
    $('.dropdown-trigger').dropdown()
 }
 
-$('.modal').modal();
+// $('.modal').modal();
 
 $.ajax({
    url: postsURL,
@@ -39,7 +39,6 @@ $.ajax({
                      </div>
                   </div>`
                   }
-                  document.getElementsByTagName
                listPostsHTML +=  `
                </div>
                <div class="user-post">
@@ -52,10 +51,10 @@ $.ajax({
                         listPostsHTML += `
                         <form id="form-${comment._id}" action="/comment/${post._id}/${comment._id}?_method=DELETE" method="POST">
                            <p><span class="full-name-comment">&nbsp;&nbsp;[${comment.user.givenName} ${comment.user.familyName}]</span> ${comment.comment}
-                           <a class="edit modal-trigger" href="#1st${comment._id}">(edit)</a>
+                           <a class="edit modal-trigger" href="#3rd${comment._id}">(edit)</a>
                            <a class="delete" href="javascript:{}" onclick="document.getElementById('form-${comment._id}').submit();">(delete)</a>
                         </form>
-                              <div id="1st${comment._id}" class="modal">
+                              <div id="3rd${comment._id}" class="modal">
                                  <div class="modal-content">
                                     <h6>Edit Comment</h6>
                                     <form action="/comment/${post._id}/${comment._id}?_method=PUT" method="POST">
