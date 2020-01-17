@@ -4,7 +4,7 @@ const Post = require('../models/post');
 function index(req, res, next) {
    // Post.find().populate('user').populate({path:'comments.user', select: ['givenName', 'familyName']}).exec(function(err, userNameComments) {
    //    console.log(userNameComments[0].comments[0]);
-      Post.find().populate({path: 'user', select: ['givenName', 'familyName', 'post', 'adm', 'avatar', 'comments']}).populate({path:'comments.user', select: ['givenName', 'familyName']}).sort({updatedAt: -1}).exec(function(err, posts) {           
+      Post.find().populate({path: 'user', select: ['givenName', 'familyName', 'post', 'adm', 'avatar', 'comments']}).populate({path:'comments.user', select: ['givenName', 'familyName']}).sort({'createdAt':-1}).exec(function(err, posts) {
          res.render('index', {
             title: `iCheats`,
             posts,
@@ -35,9 +35,7 @@ function updatePost (req, res) {
 };
 
 function deletePost (req, res) {
-   Post.deleteOne({_id: req.params.postId}, function(err, comment) {
-      console.log(comment);
-      
+   Post.deleteOne({_id: req.params.postId}, function(err, comment) {      
       if (err) {
          console.log(err);
       } else {
@@ -61,10 +59,6 @@ function newComment (req, res) {
 };
 
 function updateComment (req, res) {
-   console.log(req.params.postId);
-   console.log(req.params.commentId);
-   console.log("bodyyyyyyyy"+req.body.text);
-   
    Post.findById({_id: req.params.postId}, function(err, post) {
       let comment = post.comments.id(req.params.commentId);
       comment.comment = req.body.text;

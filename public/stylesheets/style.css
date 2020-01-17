@@ -90,6 +90,11 @@ padding-left: 5px;
   overflow-y: scroll;
 }
 
+#chat-msg > div {
+  height: 100%;
+  width: 100%;
+}
+
 #msg > li {
   padding: 10px;
   word-break: break-all;

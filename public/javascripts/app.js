@@ -4,6 +4,7 @@ const sendButtonEl = document.getElementById('chat-button');
 // const usersEl = document.getElementById('users');
 const msgFieldEl = document.getElementById('msg');
 const userNameEl = document.getElementById('userName');
+const chatScrollEl = document.getElementById('chat-msg');
 
 //! Print new msg
    socket.on('new-msg', function(data) {
@@ -15,6 +16,7 @@ const userNameEl = document.getElementById('userName');
       const liElement = document.createElement("li")
       liElement.innerText = newMsg;
       msgFieldEl.appendChild(liElement);
+      chatScrollEl.scrollTop = chatScrollEl.scrollHeight;
    };
 
 //! Update users list

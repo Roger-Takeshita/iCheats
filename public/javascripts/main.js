@@ -4,8 +4,6 @@ if ($('.dropdown-trigger').length) {
    $('.dropdown-trigger').dropdown()
 }
 
-// $('.modal').modal();
-
 $.ajax({
    url: postsURL,
    method: 'GET',
