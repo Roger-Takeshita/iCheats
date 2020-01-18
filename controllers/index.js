@@ -1,17 +1,13 @@
-const User = require('../models/user');         //! Require Models Schema
 const Post = require('../models/post');
 
 function index(req, res, next) {
-   // Post.find().populate('user').populate({path:'comments.user', select: ['givenName', 'familyName']}).exec(function(err, userNameComments) {
-   //    console.log(userNameComments[0].comments[0]);
-      Post.find().populate({path: 'user', select: ['givenName', 'familyName', 'post', 'adm', 'avatar', 'comments']}).populate({path:'comments.user', select: ['givenName', 'familyName']}).sort({'createdAt':-1}).exec(function(err, posts) {
-         res.render('index', {
-            title: `iCheats`,
-            posts,
-            user: req.user,
-         });
+   Post.find().populate({path: 'user', select: ['givenName', 'familyName', 'post', 'adm', 'avatar', 'comments']}).populate({path:'comments.user', select: ['givenName', 'familyName']}).sort({'createdAt':-1}).exec(function(err, posts) {
+      res.render('index', {
+         title: `iCheats`,
+         posts,
+         user: req.user,
       });
-   // });
+   });
 };
 
 function newPost (req, res) { 

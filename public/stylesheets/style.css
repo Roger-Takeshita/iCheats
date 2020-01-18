@@ -188,18 +188,28 @@ form > input.new-post {
   margin-inline-end: 0;
 }
 
-
 #comments {
   color: black;
   font-weight: bolder;
   background-color: #eeeeee;
 }
 
+.display-comments {
+  display: flex;
+  flex-direction: column;
+  max-height: 100px;
+  overflow-y: scroll;
+}
+
+.comments, .form-popup {
+  display: inline;
+}
+
 .comment-field {
   display: flex;
 }
 
-#input-new-comment {
+input[type=text].input-new-comment {
   font: 15px;
   height: 30px;
   border-bottom: 1px solid lightgrey;
@@ -208,7 +218,7 @@ form > input.new-post {
   border-bottom-left-radius: 5px;
 }
 
-#button-new-comment {
+.button-new-comment {
   font-size: 13px;
   width: 100px;
   height: 31px;

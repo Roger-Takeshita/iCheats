@@ -1,13 +1,68 @@
 <%- include('./partials/header') %>
   <div class="container body">
-    <div id="posts"></div>
+    <div id="posts">
+      <% posts.forEach((post) => { %>
+        <div class="post">
+          <div class="user-info">
+              <img src="<%= post.user.avatar %>" alt="avatar" class="avatar-post">
+              <span class="user-name">&nbsp;&nbsp;&nbsp;<%= post.user.givenName %> <%= post.user.familyName %></span>
+              <% if (user && (user._id === post.user._id || user.adm)) { %>
+                <a class="modal-trigger dots" href="#1st<%= post._id %>">[...]</a>
+                <div id="1st<%= post._id %>" class="modal">
+                  <div class="modal-content">
+                    <h6>Edit Post - Menu</h6>
+                    <button class="modal-trigger" href="#2nd<%= post._id %>">Edit</button>
+                    <form action="/<%= post._id %>?_method=DELETE" method="POST">
+                      <button type="submit">Delete</button>
+                    </form>
+                  </div>
+                </div>
+                <div id="2nd<%= post._id %>" class="modal">
+                  <div class="modal-content">
+                    <h6>Edit Post</h6>
+                    <form action="/<%= post._id %>?_method=PUT" method="POST">
+                      <input type="text" name="text" class="new-post" style="border: 1px solid lightgrey;" value="<%= post.post %>">
+                      <button type="submit" class="btn white-text">Update Post</button>
+                    </form>
+                  </div>
+                </div>
+              <% } %>
+          </div>
+          <div class="user-post">
+            <p><%= post.post %></p>
+          </div>
+          <div class="user-comment">
+            <p id="comments">&nbsp;&nbsp;Comments:</p>
+            <div class="display-comments">
+              <% post.comments.forEach((comment) => { %>
+                <p class="comments" id="ptag-<%= comment.id %>">
+                  <span class="full-name-comment">&nbsp;&nbsp;[<%= comment.user.givenName %> <%= comment.user.familyName %>]</span> <span id="<%= comment.id %>"><%= comment.comment %></span>
+                    <a class="edit" href="<%= post.id %>/<%= comment.id %>" value="<%= comment.id %>">(edit)</a> <a class="delete" href="<%= post.id %>/<%= comment.id %>" value="<%= comment.id %>"">(delete)</a>
+                </p>
+              <% }) %>
+            </div>
+          </div>
+          <% if (user) { %>
+            <div class="user-new-comment">
+              <form action="/comment/<%= post._id %>" method="POST">
+                  <div class="comment-field">
+                    <input class="input-new-comment" type="text" name="text">
+                    <button class="button-new-comment" type="submit">Comment</button>
+                  </div>
+              </form>
+            </div>
+          <% } %>
+        </div>
+      <% }) %>
+    </div>
+    <div id="append-modal"></div>
     <% if (user) { %>
       <div id="posts-side">
         <div id="chat-box">
           <div id="chat-msg">
-            <div>
-              <ul id="msg"></ul>
-            </div>
+             <div>
+                <ul id="msg"></ul>
+             </div>
           </div>
           <div id="chat-input-button">
             <input id="chat-input" type="text">
