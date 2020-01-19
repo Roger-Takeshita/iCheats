@@ -1,5 +1,6 @@
 const Post = require('../../models/post');
 const User = require('../../models/user');
+const ObjectID = require('mongodb').ObjectID;
 
 //! All Posts - Find
    const index = function(req, res) {
@@ -28,8 +29,33 @@ const User = require('../../models/user');
       //!= Still need to be implemented
    };
 
+//+ One Comment - Post
+   const newComment = function(req, res) {
+      Post.findById({_id: req.params.postId})
+      .then(post => {
+         if (post) {
+            let newId = new ObjectID();            
+            post.save(
+               post.comments.push({
+                  _id: newId,
+                  comment: req.body.comment,
+                  user: req.user._id
+               })
+            );
+            res.json({
+               newCommentId: newId
+            });
+         } else {
+            res.status(404).json({error: 'Post not found'});
+         }
+      })
+      .catch(err => {
+         res.status(500).json({error: 'Oh no!'});
+      })
+   }
+
 //+ One Comment - Find
-   const showOneComment = function(req, res) {
+   const findOneComment = function(req, res) {
       Post.findById({_id: req.params.postId})
       .then(post => {
          if (post) {
@@ -48,13 +74,14 @@ const User = require('../../models/user');
 
 //+ One Comment - Update
    const updateOneComment = function(req, res) {
-      console.log("UPDATING COMMENT ---------------- POST " + req.params.postId + " COMMENT " + req.params.commentId);
-      Post.findByIdAndUpdate({_id: req.params.postId})
+      Post.findById({_id: req.params.postId})
       .then(post => {
          if (post) {
-            console.log(post);
+            let comment = post.comments.id(req.params.commentId);
+            comment.comment = req.body.comment;
+            post.save();
             res.json({
-               done: true 
+               commentId: comment._id
             });
          } else {
             res.status(404).json({error: 'Comment not found'});
@@ -62,16 +89,16 @@ const User = require('../../models/user');
       })
       .catch(err => {
          res.status(500).json({error: 'Oh no!'});
-      });
+      })
    };
 
 //+ One Comment - Delete
    const deleteOneComment = function(req, res) {
-      console.log("DELETING COMMENT ---------------- POST " + req.params.postId + " COMMENT " + req.params.commentId);
       Post.findById({_id: req.params.postId})
       .then((post) => {
          if (post) {
-            let comment = post.comments.id(req.params.commentId).remove();
+            let comment = post.comments.id(req.params.commentId)
+            comment.remove();
             post.save();
             res.json({
                comment: comment
@@ -114,7 +141,8 @@ const User = require('../../models/user');
       updateOnePost,
       findOneUser,
       updateOneUser,
-      showOneComment,
+      newComment,
+      findOneComment,
       updateOneComment,
       deleteOneComment
    };

@@ -5,7 +5,6 @@ const msgFieldEl = document.getElementById('msg');
 const userNameEl = document.getElementById('userName');
 const chatScrollEl = document.getElementById('chat-msg');
 // const usersEl = document.getElementById('users');
-const postsURL = 'api/posts';
 
 //! Print new msg
    socket.on('new-msg', function(data) {
@@ -56,51 +55,106 @@ const postsURL = 'api/posts';
       $('.dropdown-trigger').dropdown()
    }
 
-   // $('.modal').modal();
+   $('.modal').modal();
 
 //! AJAX
-$('.edit').on('click', function(editComment) {
-   editComment.preventDefault();
-   $.ajax({
-      url: '/api/post' + editComment.currentTarget.pathname,
-      method: 'GET',
-      datatype: 'json',
-      success: (data) => {
-         $('#append-modal').empty();
-         let modalHTML = `
-            <div id="modal-${data.comment._id}" class="modal">
-               <div class="modal-content">
-                  <h6>Edit Comment</h6>
-                  <form action="/comment/${data.postId}/${data.comment._id}?_method=PUT" method="POST">
-                     <input type="text" name="text" value="${data.comment.comment}">
-                     <button type="submit">Update Comment</button>
-                  </form>
-               </div>
-            </div>
-         `;
-         $('#append-modal').append(modalHTML);
-         $('.modal').modal();
-         M.Modal.getInstance(document.getElementById(`modal-${data.comment._id}`)).open();
-      },
-      error: (err) => {
-         console.log(err);
-      }
-   });
-})
+   $('.edit').on('click', function(editComment) {
+      editComment.preventDefault();
+      editCommentFunc(editComment);
+   })
 
-$('.delete').on('click', function(deleteComment) {
-   deleteComment.preventDefault();
-   $.ajax({
-      url: '/api/post' + deleteComment.currentTarget.pathname,
-      method: 'DELETE',
-      datatype: 'json',
-      success: (data) => {
-         if (data.comment) {
-            $(`#ptag-${data.comment._id}`).remove();
-         }
-      },
-      error: (err) => {
-         console.log(err);
+   $('.delete').on('click', function(deleteComment) {
+      deleteComment.preventDefault();
+      deleteCommentFunc(deleteComment);
+   })
+
+   $('#submit-update-comment').on('click', function(updateComment) {
+      let newCommentEl = document.getElementById('input-update-comment').value;
+      if (newCommentEl !== "") {
+         $.ajax({
+            url: '/api/post' + updateComment.currentTarget.value,
+            method: 'PUT',
+            data: {
+               comment: newCommentEl,
+            },
+            success: (data) => {
+               M.Modal.getInstance(document.getElementById(`modal-${data.commentId}`)).close();
+               document.getElementById(`${data.commentId}`).innerHTML = newCommentEl;
+            },
+            error: (err) => {
+               console.log(err);
+            }
+         });
       }
-   });
-})
+   })
+
+   $('.button-new-comment').on('click', function(newComment) {
+      let postId = newComment.currentTarget.value;
+      let newCommentEl = document.getElementById(`input-${postId}`).value;
+      if (newCommentEl !== "") {
+         $.ajax({
+            url: '/api/post/' + postId,
+            method: 'POST',
+            datatype: 'json',
+            data: {
+               comment: newCommentEl,
+            },
+            success: (data) => {
+               let newCommentId = data.newCommentId;
+               let newCommentHTML =`
+                  <p class="comments" id="ptag-${newCommentId}">
+                     <span class="full-name-comment">&nbsp;&nbsp;[${userNameEl.innerHTML}]</span> <span id="${newCommentId}">${newCommentEl}</span>
+                     <a class="edit" href="${postId}/${newCommentId}" value="${newCommentId}">(edit)</a> <a class="delete" href="${postId}/${newCommentId}" value="${newCommentId}">(delete)</a>
+                  </p>
+               `;
+               $(`#post-comments-${postId}`).append(newCommentHTML);
+               document.getElementById(`input-${postId}`).value = "";
+               $(`#post-comments-${postId}`).scrollTop($(`#post-comments-${postId}`).prop('scrollHeight'));
+               $('.modal').modal();
+               $('.edit').on('click', function(editComment) {
+                  editComment.preventDefault();
+                  editCommentFunc(editComment);
+               });
+               $('.delete').on('click', function(deleteComment) {
+                  deleteComment.preventDefault();
+                  deleteCommentFunc(deleteComment);
+               })
+            },
+            error: (err) => {
+               console.log(err);
+            }
+         });
+      }
+   })
+
+//! Functions
+   function editCommentFunc (fromDom) {
+      $.ajax({
+         url: '/api/post' + fromDom.currentTarget.pathname,
+         method: 'GET',
+         datatype: 'json',
+         success: (data) => {
+            document.getElementById('append-modal').firstElementChild.attributes[0].value = `modal-${data.comment._id}`;
+            document.getElementById('input-update-comment').value = data.comment.comment;
+            document.getElementById('submit-update-comment').value = fromDom.currentTarget.pathname;
+            M.Modal.getInstance(document.getElementById(`modal-${data.comment._id}`)).open();
+         },
+         error: (err) => {
+            console.log(err);
+         }
+      });
+   }
+
+   function deleteCommentFunc (fromDom) {
+      $.ajax({
+         url: '/api/post' + fromDom.currentTarget.pathname,
+         method: 'DELETE',
+         datatype: 'json',
+         success: (data) => {
+            document.getElementById(`ptag-${data.comment._id}`).remove();
+         },
+         error: (err) => {
+            console.log(err);
+         }
+      });
+   }

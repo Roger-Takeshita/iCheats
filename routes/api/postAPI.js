@@ -5,7 +5,8 @@ const postAPICtrl = require('../../controllers/api/postsAPI');
 router.get('/',    postAPICtrl.index);
 router.get('/:postId', postAPICtrl.showOnePost);
 
-router.get('/:postId/:commentId', postAPICtrl.showOneComment);
+router.post('/:postId', postAPICtrl.newComment);
+router.get('/:postId/:commentId', postAPICtrl.findOneComment);
 router.put('/:postId/:commentId', postAPICtrl.updateOneComment);
 router.delete('/:postId/:commentId', postAPICtrl.deleteOneComment);
 

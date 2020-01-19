@@ -33,29 +33,26 @@
           </div>
           <div class="user-comment">
             <p id="comments">&nbsp;&nbsp;Comments:</p>
-            <div class="display-comments">
+            <div class="display-comments" id="post-comments-<%= post._id %>">
               <% post.comments.forEach((comment) => { %>
                 <p class="comments" id="ptag-<%= comment.id %>">
                   <span class="full-name-comment">&nbsp;&nbsp;[<%= comment.user.givenName %> <%= comment.user.familyName %>]</span> <span id="<%= comment.id %>"><%= comment.comment %></span>
-                    <a class="edit" href="<%= post.id %>/<%= comment.id %>" value="<%= comment.id %>">(edit)</a> <a class="delete" href="<%= post.id %>/<%= comment.id %>" value="<%= comment.id %>"">(delete)</a>
+                  <a class="edit" href="<%= post.id %>/<%= comment.id %>" value="<%= comment.id %>">(edit)</a> <a class="delete" href="<%= post.id %>/<%= comment.id %>" value="<%= comment.id %>">(delete)</a>
                 </p>
               <% }) %>
             </div>
           </div>
           <% if (user) { %>
             <div class="user-new-comment">
-              <form action="/comment/<%= post._id %>" method="POST">
-                  <div class="comment-field">
-                    <input class="input-new-comment" type="text" name="text">
-                    <button class="button-new-comment" type="submit">Comment</button>
-                  </div>
-              </form>
+              <div class="comment-field">
+                <input class="input-new-comment" id="input-<%= post._id %>" type="text" required>
+                <button class="button-new-comment" id="submit-<%= post._id %>" value="<%= post._id %>">Comment</button>
+              </div>
             </div>
           <% } %>
         </div>
       <% }) %>
     </div>
-    <div id="append-modal"></div>
     <% if (user) { %>
       <div id="posts-side">
         <div id="chat-box">
@@ -71,6 +68,15 @@
         </div>
       </div>
     <% } %>
+  </div>
+  <div id="append-modal">
+    <div id="modal-commentId" class="modal">
+       <div class="modal-content">
+          <h6>Edit Comment</h6>
+          <input id="input-update-comment" type="text">
+          <button id="submit-update-comment" value="path">Update Comment</button>
+       </div>
+    </div>
   </div>
   <% if (user) { %>
     <p id="userName" hidden><%= user.givenName %> <%= user.familyName %></p>
