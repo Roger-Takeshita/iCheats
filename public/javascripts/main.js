@@ -144,40 +144,6 @@ const chatScrollEl = document.getElementById('chat-msg');
          let postId = newComment.currentTarget.value;
          let newCommentEl = document.getElementById(`input-${postId}`).value;
          newCommentFunc(postId, newCommentEl);
-         /* if (newCommentEl !== "") {
-            $.ajax({
-               url: '/api/post/' + postId,
-               method: 'POST',
-               datatype: 'json',
-               data: {
-                  comment: newCommentEl,
-               },
-               success: (data) => {
-                  let newCommentId = data.newCommentId;
-                  let newCommentHTML =`
-                     <p class="comments" id="ptag-${newCommentId}">
-                        <span class="full-name-comment">&nbsp;&nbsp;[${userNameEl.innerHTML}]</span> <span id="${newCommentId}">${newCommentEl}</span>
-                        <a class="edit" href="${postId}/${newCommentId}" value="${newCommentId}">(edit)</a> <a class="delete" href="${postId}/${newCommentId}" value="${newCommentId}">(delete)</a>
-                     </p>
-                  `;
-                  $(`#post-comments-${postId}`).append(newCommentHTML);
-                  document.getElementById(`input-${postId}`).value = "";
-                  $(`#post-comments-${postId}`).scrollTop($(`#post-comments-${postId}`).prop('scrollHeight'));
-                  $('.modal').modal();
-                  $('.edit').on('click', function(editComment) {
-                     editComment.preventDefault();
-                     editCommentFunc(editComment);
-                  });
-                  $('.delete').on('click', function(deleteComment) {
-                     deleteComment.preventDefault();
-                     deleteCommentFunc(deleteComment);
-                  })
-               },
-               error: (err) => {
-                  console.log(err);
-               }
-            });
-         } */
       })
 
 //! Functions
@@ -240,18 +206,17 @@ const chatScrollEl = document.getElementById('chat-msg');
                let newCommentHTML =`
                   <p class="comments" id="ptag-${newCommentId}">
                      <span class="full-name-comment">&nbsp;&nbsp;[${userNameEl.innerHTML}]</span> <span id="${newCommentId}">${newCommentEl}</span>
-                     <a class="edit" href="${postId}/${newCommentId}" value="${newCommentId}">(edit)</a> <a class="delete" href="${postId}/${newCommentId}" value="${newCommentId}">(delete)</a>
+                     <a class="edit" href="${postId}/${newCommentId}" value="${newCommentId}" id="edit-${newCommentId}">(edit)</a> <a class="delete" href="${postId}/${newCommentId}" value="${newCommentId}" id="delete-${newCommentId}">(delete)</a>
                   </p>
                `;
                $(`#post-comments-${postId}`).append(newCommentHTML);
                document.getElementById(`input-${postId}`).value = "";
                $(`#post-comments-${postId}`).scrollTop($(`#post-comments-${postId}`).prop('scrollHeight'));
-               $('.modal').modal();
-               $('.edit').on('click', function(editComment) {
+               $(`#edit-${newCommentId}`).on('click', function(editComment) {
                   editComment.preventDefault();
                   editCommentFunc(editComment);
                });
-               $('.delete').on('click', function(deleteComment) {
+               $(`#delete-${newCommentId}`).on('click', function(deleteComment) {
                   deleteComment.preventDefault();
                   deleteCommentFunc(deleteComment);
                })

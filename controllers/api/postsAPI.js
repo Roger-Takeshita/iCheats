@@ -139,7 +139,7 @@ const ObjectID = require('mongodb').ObjectID;
                commentId: req.params.commentId
             });
          } else {
-               res.status(404).json({error: 'Comment not found'});
+            res.status(404).json({error: 'Comment not found'});
          }
       })
       .catch(err => {

@@ -216,6 +216,7 @@ input[type=text].input-new-comment {
   border-left: 1px solid lightgrey;
   border-right: 1px solid lightgrey;
   border-bottom-left-radius: 5px;
+  padding-left: 10px;
 }
 
 .button-new-comment {
