@@ -2,30 +2,12 @@
   <div class="container body">
     <div id="posts">
       <% posts.forEach((post) => { %>
-        <div class="post">
+        <div class="post" id="post-<%= post._id %>">
           <div class="user-info">
               <img src="<%= post.user.avatar %>" alt="avatar" class="avatar-post">
               <span class="user-name">&nbsp;&nbsp;&nbsp;<%= post.user.givenName %> <%= post.user.familyName %></span>
               <% if (user && (user._id === post.user._id || user.adm)) { %>
-                <a class="modal-trigger dots" href="#1st<%= post._id %>">[...]</a>
-                <div id="1st<%= post._id %>" class="modal">
-                  <div class="modal-content">
-                    <h6>Edit Post - Menu</h6>
-                    <button class="modal-trigger" href="#2nd<%= post._id %>">Edit</button>
-                    <form action="/<%= post._id %>?_method=DELETE" method="POST">
-                      <button type="submit">Delete</button>
-                    </form>
-                  </div>
-                </div>
-                <div id="2nd<%= post._id %>" class="modal">
-                  <div class="modal-content">
-                    <h6>Edit Post</h6>
-                    <form action="/<%= post._id %>?_method=PUT" method="POST">
-                      <input type="text" name="text" class="new-post" style="border: 1px solid lightgrey;" value="<%= post.post %>">
-                      <button type="submit" class="btn white-text">Update Post</button>
-                    </form>
-                  </div>
-                </div>
+                <a class="modal-trigger dots" href="#1st-<%= post._id %>" target="<%= post.id %>">[...]</a>
               <% } %>
           </div>
           <div class="user-post">
@@ -37,7 +19,9 @@
               <% post.comments.forEach((comment) => { %>
                 <p class="comments" id="ptag-<%= comment.id %>">
                   <span class="full-name-comment">&nbsp;&nbsp;[<%= comment.user.givenName %> <%= comment.user.familyName %>]</span> <span id="<%= comment.id %>"><%= comment.comment %></span>
-                  <a class="edit" href="<%= post.id %>/<%= comment.id %>" value="<%= comment.id %>">(edit)</a> <a class="delete" href="<%= post.id %>/<%= comment.id %>" value="<%= comment.id %>">(delete)</a>
+                  <% if (user && (user._id === post.user._id || user.adm)) { %>
+                    <a class="edit" href="<%= post.id %>/<%= comment.id %>" value="<%= comment.id %>">(edit)</a> <a class="delete" href="<%= post.id %>/<%= comment.id %>" value="<%= comment.id %>">(delete)</a>
+                  <% } %>
                 </p>
               <% }) %>
             </div>
@@ -76,6 +60,20 @@
           <input id="input-update-comment" type="text">
           <button id="submit-update-comment" value="path">Update Comment</button>
        </div>
+    </div>
+    <div id="1st-postId" class="modal">
+      <div class="modal-content">
+        <h6>Edit Post - Menu</h6>
+        <button class="modal-trigger" href="#2nd-postId">Edit</button>
+        <button id="delete-post" value="path">Delete</button>
+      </div>
+    </div>
+    <div id="2nd-postId" class="modal">
+      <div class="modal-content">
+        <h6>Edit Post</h6>
+        <input id="input-update-post" class="new-post" style="border: 1px solid lightgrey;" value="postId" type="text">
+        <button id="submit-update-post" class="btn white-text" value="path">Update Post</button>
+      </div>
     </div>
   </div>
   <% if (user) { %>

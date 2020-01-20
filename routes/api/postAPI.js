@@ -3,7 +3,9 @@ const router = express.Router();
 const postAPICtrl = require('../../controllers/api/postsAPI');
 
 router.get('/',    postAPICtrl.index);
-router.get('/:postId', postAPICtrl.showOnePost);
+router.get('/:postId', postAPICtrl.findOnePost);
+router.put('/:postId', postAPICtrl.updateOnePost);
+router.delete('/:postId', postAPICtrl.deleteOnePost);
 
 router.post('/:postId', postAPICtrl.newComment);
 router.get('/:postId/:commentId', postAPICtrl.findOneComment);

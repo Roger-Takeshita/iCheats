@@ -10,11 +10,13 @@ const ObjectID = require('mongodb').ObjectID;
    };
 
 //! One Post - Find
-   const showOnePost = function(req, res) {
+   const findOnePost = function(req, res) {
       Post.findById(req.params.postId)
       .then(post => {
          if (post) {
-            res.json(post);
+            res.json({
+               post: post.post
+            });
          } else {
             res.status(404).json({error: 'Post not found'});
          }
@@ -26,8 +28,41 @@ const ObjectID = require('mongodb').ObjectID;
 
 //! One Post - Update
    const updateOnePost = function(req, res) {
-      //!= Still need to be implemented
+      console.log(req.params.postId);
+      console.log(req.body.updatePost);
+      Post.findById(req.params.postId)
+      .then(post => {
+         if (post) {
+            post.post = req.body.updatePost;
+            post.save()
+            res.json({
+               postId: post._id
+            });
+         } else {
+            res.status(404).json({error: 'Post not found'});
+         }
+      })
+      .catch(err => {
+         res.status(500).json({error: 'Oh no!'});
+      });
    };
+//! One Post - Delete
+   const deleteOnePost = function (req, res) {
+      console.log(req.params.postId);
+      Post.findByIdAndDelete({_id: req.params.postId})
+      .then(post => {
+         if (post) {
+            res.json({
+               done: true
+            })
+         } else {
+            res.status(404).json({error: 'Post not found'});
+         }
+      })
+      .catch(err => {
+         res.status(500).json({error: 'Oh no!'});
+      })
+   }
 
 //+ One Comment - Post
    const newComment = function(req, res) {
@@ -101,7 +136,7 @@ const ObjectID = require('mongodb').ObjectID;
             comment.remove();
             post.save();
             res.json({
-               comment: comment
+               commentId: req.params.commentId
             });
          } else {
                res.status(404).json({error: 'Comment not found'});
@@ -137,8 +172,9 @@ const ObjectID = require('mongodb').ObjectID;
 //? Export methods/functions to route
    module.exports = {
       index,
-      showOnePost,
+      findOnePost,
       updateOnePost,
+      deleteOnePost,
       findOneUser,
       updateOneUser,
       newComment,
